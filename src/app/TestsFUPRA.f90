@@ -53,9 +53,10 @@
 
     test_spots=3
     call shp_array%resize(test_spots)
-    do i=6, test_spots
+    do i=3, test_spots
         square%id = i
         call shp_array%put(i, square)
+        !square = shp_array%get(2)
     enddo
 
     print*, "From our amazing resized container array!"

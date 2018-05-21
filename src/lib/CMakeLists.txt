@@ -34,7 +34,7 @@ endif()
 # Also adds sources to the Solution Explorer
 ADD_LIBRARY(${LIB_NAME} ${LIB_SRC})
 
-# Creates folder "libraries" and adds target project (MOHIDLagrangianLib.vcproj)
+# Creates folder "libraries" and adds target project (Lib.vcproj)
 set_property(TARGET ${LIB_NAME} PROPERTY FOLDER "libraries")
 
 # Properties->General->Output Directory
