@@ -65,8 +65,8 @@
     !> @param[this, index]
     !---------------------------------------------------------------------------
     function getValue(this, index)
-    class(container_array) :: this
-    integer :: index
+    class(container_array), intent(in) :: this
+    integer, intent(in) :: index
     class(*), pointer :: getValue
     if (index .le. this%getLength()) then
         getValue => this%contents(index)%getContent()
@@ -82,9 +82,9 @@
     !> @param[this, index, value]
     !---------------------------------------------------------------------------
     subroutine putValue(this, index, value)
-    class(container_array) :: this
-    integer :: index
-    class(*) :: value
+    class(container_array), intent(inout) :: this
+    integer, intent(in) :: index
+    class(*), intent(in) :: value
     if (index .le. this%getLength()) then
         call this%contents(index)%storeContent(value)
     else
@@ -99,7 +99,7 @@
     !> @param[this]
     !---------------------------------------------------------------------------
     function getLength(this)
-    class(container_array) :: this
+    class(container_array), intent(in) :: this
     integer :: getLength
     getLength = this%length
     end function getLength
@@ -112,8 +112,8 @@
     !> @param[this, newsize]
     !---------------------------------------------------------------------------
     subroutine resizeArray(this,newsize)
-    class(container_array) :: this
-    integer :: newsize
+    class(container_array), intent(inout) :: this
+    integer, intent(in) :: newsize
     integer :: i, tocopy
     type(container), allocatable, dimension(:) :: temp
     tocopy=min(this%getLength(),newsize)
@@ -134,8 +134,8 @@
     !> @param[this, entries]
     !---------------------------------------------------------------------------
     subroutine initArray(this,entries)
-    class(container_array) :: this
-    integer :: entries
+    class(container_array), intent(inout) :: this
+    integer, intent(in) :: entries
     if (allocated(this%contents)) then
         deallocate(this%contents)
     end if

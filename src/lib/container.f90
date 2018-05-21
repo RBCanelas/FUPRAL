@@ -59,7 +59,7 @@
     !> @param[this]
     !---------------------------------------------------------------------------
     function getContent(this)
-    class(container) :: this
+    class(container), intent(in) :: this
     class(*), pointer :: getContent
     getContent => this%value
     end function getContent
@@ -72,8 +72,8 @@
     !> @param[this, to_store]
     !---------------------------------------------------------------------------
     subroutine storeContent(this,to_store)
-    class(container) :: this
-    class(*) :: to_store
+    class(container), intent(inout) :: this
+    class(*), intent(in) :: to_store
     allocate(this%value, source=to_store)
     end subroutine storeContent
     
@@ -85,7 +85,7 @@
     !> @param[this]
     !---------------------------------------------------------------------------
     subroutine printContainer(this)
-    class(container) :: this
+    class(container), intent(in) :: this
     select type(v => this%value)
     type is (integer)
         print *, v
@@ -106,8 +106,8 @@
     !> @param[to_store]
     !---------------------------------------------------------------------------
     function constructor(to_store)
-    class(container),pointer :: constructor
-    class(*) :: to_store
+    class(container), pointer :: constructor
+    class(*), intent(in) :: to_store
     allocate(constructor)
     allocate(constructor%value, source=to_store)
     end function constructor

@@ -36,17 +36,16 @@
     contains
 
     subroutine printShape(this)
-    class(shape) :: this
+    class(shape), intent(in) :: this
     print*, 'id = ', this%id
     print*, 'is filled = ', this%filled
     end subroutine printShape
 
     subroutine printCircle(this)
-    class(circle) :: this
+    class(circle), intent(in) :: this
     print*, 'id = ', this%id
     print*, 'radius = ', this%radius
     print*, 'is filled = ', this%filled
     end subroutine printCircle
-
 
     end module types_mod

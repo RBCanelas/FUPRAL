@@ -32,7 +32,7 @@
     contains
 
     subroutine printshapeArray(this)
-    class(shapeArray) :: this
+    class(shapeArray), intent(in) :: this
     class(*), pointer :: curr
     integer :: i
     do i=1, this%getLength()
@@ -49,8 +49,8 @@
     end subroutine printshapeArray
 
     subroutine printshapeElement(this,index)
-    class(shapeArray) :: this
-    integer :: index
+    class(shapeArray), intent(in) :: this
+    integer, intent(in) :: index
     class(*), pointer :: curr
     if (index .le. this%getLength()) then
         curr => this%getValue(index)
