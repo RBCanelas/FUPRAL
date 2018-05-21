@@ -1,0 +1,131 @@
+\hypertarget{namespaceabstract__container__array__mod}{}\section{abstract\+\_\+container\+\_\+array\+\_\+mod Module Reference}
+\label{namespaceabstract__container__array__mod}\index{abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}}
+
+
+Module that defines an unlimited polymorphic container class and related methods. A container is a fundamental entity allowing to build data structures such as lists and arrays. This is an abstract type, so a derived type must be defined for any specific contents that may be required. Those derived types should provide type-\/specific methods that require type-\/guards, such as printing.  
+
+
+\subsection*{Data Types}
+\begin{DoxyCompactItemize}
+\item 
+type \hyperlink{structabstract__container__array__mod_1_1container__array}{container\+\_\+array}
+\end{DoxyCompactItemize}
+\subsection*{Functions/\+Subroutines}
+\begin{DoxyCompactItemize}
+\item 
+class($\ast$) function, pointer \hyperlink{namespaceabstract__container__array__mod_a2b3e0aec504d76c73bf7f18158924af4}{getvalue} (this, index)
+\begin{DoxyCompactList}\small\item\em Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespaceabstract__container__array__mod_aae1f6309c51e282a528ce78f128443e0}{putvalue} (this, index, value)
+\begin{DoxyCompactList}\small\item\em Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC \end{DoxyCompactList}\item 
+integer function \hyperlink{namespaceabstract__container__array__mod_a22d71ca3f03bf0bb5d3737338e5e349a}{getlength} (this)
+\begin{DoxyCompactList}\small\item\em Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespaceabstract__container__array__mod_ac2d73eb111ffde938f81e3f93b0cb3e0}{resizearray} (this, newsize)
+\begin{DoxyCompactList}\small\item\em Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC \end{DoxyCompactList}\item 
+subroutine \hyperlink{namespaceabstract__container__array__mod_a07b39c73368acf72d95a1dbef0f25943}{initarray} (this, entries)
+\begin{DoxyCompactList}\small\item\em Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Module that defines an unlimited polymorphic container class and related methods. A container is a fundamental entity allowing to build data structures such as lists and arrays. This is an abstract type, so a derived type must be defined for any specific contents that may be required. Those derived types should provide type-\/specific methods that require type-\/guards, such as printing. 
+
+\begin{DoxyAuthor}{Author}
+Ricardo Birjukovs Canelas 
+\end{DoxyAuthor}
+
+
+\subsection{Function/\+Subroutine Documentation}
+\mbox{\Hypertarget{namespaceabstract__container__array__mod_a22d71ca3f03bf0bb5d3737338e5e349a}\label{namespaceabstract__container__array__mod_a22d71ca3f03bf0bb5d3737338e5e349a}} 
+\index{abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}!getlength@{getlength}}
+\index{getlength@{getlength}!abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}}
+\subsubsection{\texorpdfstring{getlength()}{getlength()}}
+{\footnotesize\ttfamily integer function abstract\+\_\+container\+\_\+array\+\_\+mod\+::getlength (\begin{DoxyParamCaption}\item[{class(\hyperlink{structabstract__container__array__mod_1_1container__array}{container\+\_\+array}), intent(in)}]{this }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC 
+
+Method that returns the length of the array 
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 102 of file abstract\+\_\+container\+\_\+array.\+f90.
+
+\mbox{\Hypertarget{namespaceabstract__container__array__mod_a2b3e0aec504d76c73bf7f18158924af4}\label{namespaceabstract__container__array__mod_a2b3e0aec504d76c73bf7f18158924af4}} 
+\index{abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}!getvalue@{getvalue}}
+\index{getvalue@{getvalue}!abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}}
+\subsubsection{\texorpdfstring{getvalue()}{getvalue()}}
+{\footnotesize\ttfamily class($\ast$) function, pointer abstract\+\_\+container\+\_\+array\+\_\+mod\+::getvalue (\begin{DoxyParamCaption}\item[{class(\hyperlink{structabstract__container__array__mod_1_1container__array}{container\+\_\+array}), intent(in)}]{this,  }\item[{integer, intent(in)}]{index }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC 
+
+Method that returns returns the requested entry (pointer) 
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 68 of file abstract\+\_\+container\+\_\+array.\+f90.
+
+\mbox{\Hypertarget{namespaceabstract__container__array__mod_a07b39c73368acf72d95a1dbef0f25943}\label{namespaceabstract__container__array__mod_a07b39c73368acf72d95a1dbef0f25943}} 
+\index{abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}!initarray@{initarray}}
+\index{initarray@{initarray}!abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}}
+\subsubsection{\texorpdfstring{initarray()}{initarray()}}
+{\footnotesize\ttfamily subroutine abstract\+\_\+container\+\_\+array\+\_\+mod\+::initarray (\begin{DoxyParamCaption}\item[{class(\hyperlink{structabstract__container__array__mod_1_1container__array}{container\+\_\+array}), intent(inout)}]{this,  }\item[{integer, intent(in)}]{entries }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC 
+
+Method that allocates the container array. Deallocates if already allocated 
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 137 of file abstract\+\_\+container\+\_\+array.\+f90.
+
+\mbox{\Hypertarget{namespaceabstract__container__array__mod_aae1f6309c51e282a528ce78f128443e0}\label{namespaceabstract__container__array__mod_aae1f6309c51e282a528ce78f128443e0}} 
+\index{abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}!putvalue@{putvalue}}
+\index{putvalue@{putvalue}!abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}}
+\subsubsection{\texorpdfstring{putvalue()}{putvalue()}}
+{\footnotesize\ttfamily subroutine abstract\+\_\+container\+\_\+array\+\_\+mod\+::putvalue (\begin{DoxyParamCaption}\item[{class(\hyperlink{structabstract__container__array__mod_1_1container__array}{container\+\_\+array}), intent(inout)}]{this,  }\item[{integer, intent(in)}]{index,  }\item[{class($\ast$), intent(in)}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC 
+
+Method that stores a value on the requested index 
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 85 of file abstract\+\_\+container\+\_\+array.\+f90.
+
+\mbox{\Hypertarget{namespaceabstract__container__array__mod_ac2d73eb111ffde938f81e3f93b0cb3e0}\label{namespaceabstract__container__array__mod_ac2d73eb111ffde938f81e3f93b0cb3e0}} 
+\index{abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}!resizearray@{resizearray}}
+\index{resizearray@{resizearray}!abstract\+\_\+container\+\_\+array\+\_\+mod@{abstract\+\_\+container\+\_\+array\+\_\+mod}}
+\subsubsection{\texorpdfstring{resizearray()}{resizearray()}}
+{\footnotesize\ttfamily subroutine abstract\+\_\+container\+\_\+array\+\_\+mod\+::resizearray (\begin{DoxyParamCaption}\item[{class(\hyperlink{structabstract__container__array__mod_1_1container__array}{container\+\_\+array}), intent(inout)}]{this,  }\item[{integer, intent(in)}]{newsize }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Birjukovs Canelas -\/ M\+A\+R\+E\+T\+EC 
+
+Method that grows (adds empty space) or shrinks (discards the last entries) of the array 
+\begin{DoxyParams}{Parameters}
+{\em } & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 115 of file abstract\+\_\+container\+\_\+array.\+f90.
+
