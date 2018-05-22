@@ -36,7 +36,7 @@
     class(*), pointer :: curr
     integer :: i
     do i=1, this%getLength()
-        curr => this%get(i)
+        curr => this%getValue(i)
         select type(curr)
         type is (shape)
             call curr%print()
@@ -53,7 +53,7 @@
     integer, intent(in) :: index
     class(*), pointer :: curr
     if (index .le. this%getLength()) then
-        curr => this%get(index)
+        curr => this%getValue(index)
         select type(curr)
         type is (shape)
             call curr%print()

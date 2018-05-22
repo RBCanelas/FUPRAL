@@ -13,7 +13,7 @@
     !
     !You should have received a copy of the GNU General Public License
     !along with this program.  If not, see <https://www.gnu.org/licenses/>.
-    
+
     !------------------------------------------------------------------------------
     !        IST/MARETEC, Water Modelling Group, Mohid modelling system
     !------------------------------------------------------------------------------
@@ -25,12 +25,12 @@
     !> Ricardo Birjukovs Canelas
     !
     ! DESCRIPTION:
-    !> Module that defines an unlimited polymorphic container class and related 
-    !> methods. A container is a fundamental entity allowing to build data 
+    !> Module that defines an unlimited polymorphic container class and related
+    !> methods. A container is a fundamental entity allowing to build data
     !> structures such as lists and arrays.
-    !> This is an abstract type, so a derived type must be defined for any 
-    !> specific contents that may be required. Those derived types should provide 
-    !> type-specific methods that require type-guards, such as printing. 
+    !> This is an abstract type, so a derived type must be defined for any
+    !> specific contents that may be required. Those derived types should provide
+    !> type-specific methods that require type-guards, such as printing.
     !------------------------------------------------------------------------------
 
     module abstract_container_array_mod
@@ -43,7 +43,7 @@
 
     type, abstract :: container_array !< Abstract unlimited polymorphic array class
         private
-        class(container), allocatable, dimension(:) :: contents !< Allocatable unlimited polymorphic container array 
+        class(container), allocatable, dimension(:) :: contents !< Allocatable unlimited polymorphic container array
         integer :: length !< Lenght of the array, for easy access
     contains
     procedure :: resize => resizeArray  !< Grows (adds empty space) or shrinks (discards the last entries) of the array
@@ -57,7 +57,7 @@
 
     contains
 
-    
+
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
     !> @brief
@@ -107,8 +107,9 @@
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
     !> @brief
-    !> Method that grows (adds empty space) or shrinks (discards the 
-    !> last entries) of the array
+    !> Method that grows (adds empty space) or shrinks (discards the
+    !> last entries) of the array. Use sparsely as this might get expensive
+    !> for large array operations. Should think of a way to use move_alloc()
     !> @param[this, newsize]
     !---------------------------------------------------------------------------
     subroutine resizeArray(this,newsize)
@@ -121,27 +122,29 @@
     do i=1, tocopy
         call temp(i)%storeContent(this%getValue(i))
     enddo
-    call this%init(newsize)
-    do i=1, tocopy
-        call this%putValue(i,temp(i)%getContent())
-    enddo
+    call this%init(newsize,temp)
     end subroutine resizeArray
 
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
     !> @brief
     !> Method that allocates the container array. Deallocates if already allocated
-    !> @param[this, entries]
+    !> @param[this, entries, tocopy]
     !---------------------------------------------------------------------------
-    subroutine initArray(this,entries)
+    subroutine initArray(this,entries,tocopy)
     class(container_array), intent(inout) :: this
     integer, intent(in) :: entries
+    type(container), dimension(:), optional, intent(in) :: tocopy
     if (allocated(this%contents)) then
         deallocate(this%contents)
     end if
-    allocate(this%contents(entries))
-    this%length=entries
+    if (.not.present(tocopy)) then !allocating an empty array with 'entries'
+        allocate(this%contents(entries))
+        this%length=entries
+    else if (present(tocopy)) then !using sourced allocation
+      allocate(this%contents, source=tocopy)
+      this%length=size(tocopy)
+    endif
     end subroutine initArray
-
 
     end module abstract_container_array_mod
