@@ -23,7 +23,7 @@ program TestsFUPRA
   implicit none
 
   integer i
-  type(shapeArray)  :: shp_array
+  type(shapeArray)  :: shp_array, testarray
   integer values(10)
   type(shape) :: square
   type(circle) :: round
@@ -77,6 +77,11 @@ program TestsFUPRA
   print*, "Printing some elements from our amazing container array!"
   call shp_array%printElement(1)
   call shp_array%printElement(2)
-  call shp_array%printElement(5)
+  call shp_array%printElement(3)
+  
+  call testarray%init(1)
+  print*, 'testarray is ', testarray%getLength(), ' elements long'  
+  call testarray%resize(testarray%getLength()+10)  
+  print*, 'testarray is ', testarray%getLength(), ' elements long'
 
 end program TestsFUPRA
