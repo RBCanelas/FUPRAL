@@ -23,12 +23,17 @@ program TestsFUPRA
   implicit none
 
   integer i
-  type(shapeArray)  :: shp_array, testarray
-  integer values(10)
+  type(shapeArray)  :: shp_array, testarray, testarray2
+  integer :: values(10)
   type(shape) :: square
   type(circle) :: round
   integer :: test_spots
   class(*), pointer :: something
+  
+  real(8) :: start1, finish1, start2, finish2
+  integer, allocatable, dimension(:) :: normIntArr
+  
+  
 
   square%id = 16
   square%filled = .true.
@@ -83,5 +88,29 @@ program TestsFUPRA
   print*, 'testarray is ', testarray%getLength(), ' elements long'  
   call testarray%resize(testarray%getLength()+10)  
   print*, 'testarray is ', testarray%getLength(), ' elements long'
+  
+  
+  print*, '-------------------Performance tests--------------------'
+  test_spots = 10000000
+  print*, 'Allocating and assigning ', test_spots, ' integers'
+  print*, 'Simple integer array'
+  
+  
+  
+  call cpu_time(start1)
+    allocate(normIntArr(test_spots))
+    normIntArr = 10
+  call cpu_time(finish1)
+  
+  print*, 'Polymorphic array'
+  
+  call cpu_time(start2)
+    call testarray2%init(test_spots, initvalue = 10)
+  call cpu_time(finish2)
+  
+  print '(" Time for normal array = ",f9.6," seconds.")', finish1-start1
+  print '(" Time for poly array   = ",f9.6," seconds.")', finish2-start2
+
+  
 
 end program TestsFUPRA
