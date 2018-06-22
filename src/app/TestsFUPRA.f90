@@ -31,6 +31,7 @@ program TestsFUPRA
   class(*), pointer :: something
   
   real(8) :: start1, finish1, start2, finish2
+  integer :: size1, size2, size3
   integer, allocatable, dimension(:) :: normIntArr
   
   
@@ -101,15 +102,19 @@ program TestsFUPRA
     allocate(normIntArr(test_spots))
     normIntArr = 10
   call cpu_time(finish1)
+  size1 = sizeof(normIntArr)
   
   print*, 'Polymorphic array'
   
   call cpu_time(start2)
     call testarray2%init(test_spots, initvalue = 10)
   call cpu_time(finish2)
+  size3 = testarray2%getMemSize()
   
-  print '(" Time for normal array = ",f9.6," seconds.")', finish1-start1
-  print '(" Time for poly array   = ",f9.6," seconds.")', finish2-start2
+  print '(" Time for normal array = ",f15.6," seconds.")', finish1-start1
+  print '(" Time for poly array   = ",f15.6," seconds.")', finish2-start2
+  print '(" Size of normal array  = ",f15.6," mb.")', size1*1E-6
+  print '(" Size of poly array    = ",f15.6," mb.")', size3*1E-6
 
   
 
