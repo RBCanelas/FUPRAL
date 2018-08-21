@@ -21,14 +21,13 @@
 
     type shape
         integer :: id
-        real :: posx, posy
         logical :: filled
     contains
     procedure :: print=>printShape  ! print shape
     end type shape
 
     type, extends(shape) :: circle
-        integer :: radius
+        real :: radius
     contains
     procedure :: print=>printCircle  ! print shape
     end type circle

@@ -51,7 +51,7 @@
     procedure, non_overridable :: get => getValue !< returns the requested entry (pointer)
     procedure, non_overridable :: put => putValue !< stores a value on the requested index
     procedure, non_overridable :: getLength !< returns the length of the array
-    procedure, non_overridable :: getMemSize !< returns the memory occupied by the contents, in bytes (1E-6 mb)
+    !procedure, non_overridable :: getMemSize !< returns the memory occupied by the contents, in bytes (1E-6 mb)
     end type container_array
 
     logical, target :: MC = .true.
@@ -167,16 +167,17 @@
     endif
     end subroutine initArray
     
-    !---------------------------------------------------------------------------
-    !> @author Ricardo Birjukovs Canelas - MARETEC
-    !> @brief
-    !> Method that returns the memory used by the array in bytes
-    !> @param[in] this
-    !---------------------------------------------------------------------------
-    function getMemSize(this)
-    class(container_array), intent(in) :: this
-    integer :: getMemSize
-    getMemSize = sizeof(this%contents)
-    end function getMemSize
+    ! !---------------------------------------------------------------------------
+    ! !> @author Ricardo Birjukovs Canelas - MARETEC
+    ! !> @brief
+    ! !> Method that returns the memory used by the array in bytes
+    ! !> @param[in] this
+    ! !---------------------------------------------------------------------------
+    ! function getMemSize(this)
+    ! class(container_array), intent(in) :: this
+    ! integer :: getMemSize
+    ! !getMemSize = sizeof(this%contents)
+    ! getMemSize = storage_size(this%contents)
+    ! end function getMemSize
 
     end module abstract_container_array_mod
