@@ -50,11 +50,14 @@
     contains
     procedure, non_overridable :: addValue    !< stores a value on the list
     procedure, non_overridable :: getValue    !< get nth value in list
+    procedure, non_overridable :: removeCurrent !< Method that removes the current link from a list
+    procedure, non_overridable :: remove      !< Method that removes the nth link from a list
     procedure, non_overridable :: getFirst    !< returns the fist link of the list
     procedure, non_overridable :: getLast     !< returns the last link of the list
     procedure, non_overridable :: getSize     !< returns the size of the list
     procedure, non_overridable :: reset       !< reset list iterator
     procedure, non_overridable :: next        !< iterate to next value in list
+    procedure, non_overridable :: previous    !< iterate to previous value in list
     procedure, non_overridable :: currentValue!< get current value in list
     procedure, non_overridable :: moreValues  !< more values to iterate?
     generic :: add => addValue
@@ -66,22 +69,87 @@
     !> @Ricardo Birjukovs Canelas - MARETEC
     !> @brief
     !> Method that stores a value on a new link
-    !> @param[this, value]
+    !> @param[this, value, key]
     !---------------------------------------------------------------------------
-    subroutine addValue(this, value)
+    subroutine addValue(this, value, key)
     class(linkedlist) :: this
-    class(*) :: value
+    class(*), intent(in) :: value
+    integer, intent(in), optional :: key
     class(link), pointer :: newLink
     if (.not. associated(this%firstLink)) then
-        this%firstLink => link(value, this%firstLink)
+        if (present(key)) then
+            this%firstLink => link(value, this%firstLink, this%firstLink, key)
+        else
+            this%firstLink => link(value, this%firstLink, this%firstLink)
+        end if
         this%lastLink => this%firstLink
     else
-        newLink => link(value, this%lastLink%nextLink())
+        if (present(key)) then
+            newLink => link(value, this%lastLink, this%lastLink%nextLink(), key)
+        else
+            newLink => link(value, this%lastLink, this%lastLink%nextLink())
+        end if
         call this%lastLink%setNextLink(newLink)
         this%lastLink => newLink
     end if
     this%numLinks = this%numLinks + 1
     end subroutine addValue
+    
+    !---------------------------------------------------------------------------
+    !> @Ricardo Birjukovs Canelas - MARETEC
+    !> @brief
+    !> Method that removes a link from the list
+    !---------------------------------------------------------------------------    
+    subroutine removeCurrent(this)
+    class(linkedlist), intent(inout) :: this    
+    class(link), pointer :: previouslink
+    class(link), pointer :: nextlink 
+    
+    previouslink => this%currLink%previousLink()
+    nextlink => this%currLink%nextLink()
+    
+    if (associated(this%currLink,this%firstLink)) then !This is the first link
+        this%firstLink => nextlink
+    end if
+    if (associated(previouslink)) then
+        call previouslink%setNextLink(nextlink)
+    end if
+    if (associated(nextlink)) then
+        call nextlink%setPreviousLink(previouslink)
+    end if
+    
+    call this%currLink%removeLink()
+    deallocate(this%currLink)    
+    this%currLink => nextlink
+    this%numLinks = this%numLinks - 1
+    
+    end subroutine removeCurrent
+    
+    !---------------------------------------------------------------------------
+    !> @Ricardo Birjukovs Canelas - MARETEC
+    !> @brief
+    !> Method that removes the nth link from a list
+    !---------------------------------------------------------------------------    
+    subroutine remove(this, n)
+    class(linkedlist), intent(inout) :: this
+    integer, intent(in) :: n
+    class(link), pointer :: previouslink
+    class(link), pointer :: nextlink
+    integer :: i
+    if (associated(this%firstLink)) then
+        if (this%numLinks>=n) then
+            call this%reset()
+            do i=1, n-1    !iterating trough the list until the desired position
+                call this%next()
+            end do
+            if (this%moreValues()) then
+                call this%removeCurrent()
+            end if
+        else
+            stop '[LinkedList::remove]: index out of bounds'
+        end if
+    end if
+    end subroutine remove
 
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
@@ -166,6 +234,16 @@
     class(linkedlist) :: this
     this%currLink => this%currLink%nextLink()
     end subroutine next
+    
+    !---------------------------------------------------------------------------
+    !> @Ricardo Birjukovs Canelas - MARETEC
+    !> @brief
+    !> Method that returns the previous link in the list
+    !---------------------------------------------------------------------------
+    subroutine previous(this)
+    class(linkedlist) :: this
+    this%currLink => this%currLink%previousLink()
+    end subroutine previous
 
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
@@ -186,7 +264,5 @@
     class(linkedlist) :: this
     this%currLink => this%firstLink
     end subroutine reset
-
-
 
     end module abstract_LinkedList_mod

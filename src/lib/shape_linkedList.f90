@@ -26,14 +26,28 @@
     type, extends(linkedlist) :: shapeList
     contains
     procedure :: print => printshapeList
+    procedure :: printCurrent => printshapeListcurr
     end type shapeList
 
     contains
 
+    subroutine printshapeListcurr(this)
+    class(shapeList), intent(in) :: this
+    class(*), pointer :: curr
+    curr => this%currentValue() ! get current value
+    select type(curr)
+    type is (shape)
+        call curr%print()
+    class is (circle)
+        call curr%print()
+        class default
+        stop '[printshapeList]: unexepected type of content: not a shape or derived type'
+    end select
+    end subroutine printshapeListcurr
+
     subroutine printshapeList(this)
     class(shapeList), intent(in) :: this
     class(*), pointer :: curr
-    
     call this%reset()               ! reset list iterator
     do while(this%moreValues())     ! loop while there are values to print
         curr => this%currentValue() ! get current value
@@ -46,9 +60,8 @@
             stop '[printshapeList]: unexepected type of content: not a shape or derived type'
         end select
         call this%next()            ! increment the list iterator
-    end do  
+    end do
     call this%reset()               ! reset list iterator
-
     end subroutine printshapeList
 
     end module shape_linkedList_mod

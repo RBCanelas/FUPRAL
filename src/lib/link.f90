@@ -37,13 +37,18 @@
     !Public access vars
     public :: link
 
-    type, extends(container) :: link !< Unlimited polymorphic container class 
+    type, extends(container) :: link !< link class based on a container 
         private !contents are only accessible trough the methods, no direct access is allowed
-        type(link), pointer :: next => null() !< value stored in container
+        integer, public :: key
+        type(link), pointer :: next => null() !< pointer to a next link
+        type(link), pointer :: previous => null() !< pointer to a previous link
     contains
-    procedure :: get => getValue       !< returns stored content
-    procedure :: nextLink    !< stores the provided values (sourced allocation)
-    procedure :: setNextLink !< sets the next link pointer
+    procedure :: get => getValue        !< returns stored content
+    procedure :: nextLink               !< gets the next link
+    procedure :: previousLink           !< gets the previous link
+    procedure :: setNextLink            !< sets the next link pointer
+    procedure :: setPreviousLink        !< sets the previous link pointer
+    procedure :: removeLink
     end type link
 
     interface link
@@ -67,13 +72,24 @@
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
     !> @brief
-    !> Method that returns the a pointer to the next link in a list
+    !> Method that returns a pointer to the next link in a list
     !---------------------------------------------------------------------------
     function nextLink(this)
     class(link) :: this
     class(link), pointer :: nextLink
     nextLink => this%next
     end function nextLink
+    
+    !---------------------------------------------------------------------------
+    !> @Ricardo Birjukovs Canelas - MARETEC
+    !> @brief
+    !> Method that returns a pointer to the previous link in a list
+    !---------------------------------------------------------------------------
+    function previousLink(this)
+    class(link) :: this
+    class(link), pointer :: previousLink
+    previousLink => this%previous
+    end function previousLink
     
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
@@ -85,21 +101,48 @@
     class(link), pointer :: next
     this%next => next
     end subroutine setNextLink
+    
+    !---------------------------------------------------------------------------
+    !> @Ricardo Birjukovs Canelas - MARETEC
+    !> @brief
+    !> Method to set the previous link in a list.
+    !---------------------------------------------------------------------------
+    subroutine setPreviousLink(this,prev)
+    class(link) :: this
+    class(link), pointer :: prev
+    this%previous => prev
+    end subroutine setPreviousLink
+    
+    !---------------------------------------------------------------------------
+    !> @Ricardo Birjukovs Canelas - MARETEC
+    !> @brief
+    !> Method to remove a link in a list.
+    !---------------------------------------------------------------------------
+    subroutine removeLink(this)
+    class(link), intent(inout) :: this
+    call this%deleteContent()
+    end subroutine removeLink
 
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
     !> @brief
     !> Link constructor, can be used with the 'link' name since it was defined 
     !> as such in an interface declaration
-    !> @param[to_store, next]
+    !> @param[to_store, prev, next]
     !---------------------------------------------------------------------------
-    function constructor(to_store, next)
+    function constructor(to_store, prev, next, key)
     class(link), pointer :: constructor
     class(*), intent(in) :: to_store
+    class(link), pointer, intent(in) :: prev
     class(link), pointer, intent(in) :: next
+    integer, intent(in), optional :: key
     allocate(constructor)
+    call constructor%setPreviousLink(prev)
     call constructor%setNextLink(next)
     call constructor%storeContent(to_store)
+    if (present(key)) then
+        constructor%key = key
+    end if
     end function constructor
 
     end module link_mod
