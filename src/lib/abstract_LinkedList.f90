@@ -49,7 +49,7 @@
         integer :: numLinks = 0
     contains
     procedure, non_overridable :: addValue    !< stores a value on the list
-    procedure, non_overridable :: getValue
+    procedure, non_overridable :: getValue    !< get nth value in list
     procedure, non_overridable :: getFirst    !< returns the fist link of the list
     procedure, non_overridable :: getLast     !< returns the last link of the list
     procedure, non_overridable :: getSize     !< returns the size of the list
@@ -82,8 +82,6 @@
     end if
     this%numLinks = this%numLinks + 1
     end subroutine addValue
-
-
 
     !---------------------------------------------------------------------------
     !> @Ricardo Birjukovs Canelas - MARETEC
@@ -143,7 +141,7 @@
         else
             stop '[LinkedList::getValue]: index out of bounds'
         end if
-    else 
+    else
         stop '[LinkedList::getValue]: list is empty'
     end if
     end function getValue

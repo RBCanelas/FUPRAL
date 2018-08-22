@@ -25,7 +25,7 @@ program TestsFUPRA
 
   integer i
   type(shapeArray)  :: shp_array, testarray, testarray2
-  type(shapeList) :: shp_list, testlist1, testlist2
+  type(shapeList) :: shp_list, testlist, testlist2
   integer :: values(10)
   type(shape) :: square
   type(circle) :: round
@@ -110,7 +110,8 @@ program TestsFUPRA
 
   call shp_list%print()
   
-  something => shp_list%getValue(6)  
+  something => shp_list%getValue(4)
+  !something => testlist%getValue(4) 
   
   print*, 'getting a value from the list'
   select type(something)

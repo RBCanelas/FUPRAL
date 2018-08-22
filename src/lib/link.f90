@@ -42,8 +42,8 @@
         type(link), pointer :: next => null() !< value stored in container
     contains
     procedure :: get => getValue       !< returns stored content
-    procedure :: nextLink   !< stores the provided values (sourced allocation)
-    procedure :: setNextLink !< prints container contents (only primitive types implemented)
+    procedure :: nextLink    !< stores the provided values (sourced allocation)
+    procedure :: setNextLink !< sets the next link pointer
     end type link
 
     interface link
@@ -98,7 +98,7 @@
     class(*), intent(in) :: to_store
     class(link), pointer, intent(in) :: next
     allocate(constructor)
-    constructor%next => next
+    call constructor%setNextLink(next)
     call constructor%storeContent(to_store)
     end function constructor
 
