@@ -85,7 +85,7 @@ program TestsFUPRA
   print*, "Getting something out of our amazing container array and printing it!"
   something => shp_array%get(2)
   select type(something)
-  type is (shape)
+  class is (shape)
     something%id = 666 !changing a value directly on the array
     call something%print()
     class default
@@ -105,15 +105,32 @@ program TestsFUPRA
 
 
   print*, '----------------------Linked List-----------------------'
+  
+  print*, 'list is ', shp_list%getSize(), ' links long'
 
   call shp_list%print()
+  
+  something => shp_list%getValue(6)  
+  
+  print*, 'getting a value from the list'
+  select type(something)
+  class is (shape)
+    call something%print()
+    something%id = 668 !changing a value directly on the list
+    something%filled = .true.
+    class default
+    stop 'Unexepected type of content: not a shape'
+  end select
+  
+  print*, 'changing a value from the list'  
+  call shp_list%print()
+  
+  
   
   print*, '-------------------Performance tests--------------------'
   test_spots = 10000000
   print*, 'Allocating and assigning ', test_spots, ' integers'
   print*, 'Simple integer array'
-  
-  
   
   call cpu_time(start1)
     allocate(normIntArr(test_spots))
