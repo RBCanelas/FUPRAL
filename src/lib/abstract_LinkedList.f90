@@ -25,7 +25,7 @@
     !> Ricardo Birjukovs Canelas
     !
     ! DESCRIPTION:
-    !> Module that defines an unlimited polymorphic container class and related
+    !> Module that defines an unlimited polymorphic container list class and related
     !> methods. A container is a fundamental entity allowing to build data
     !> structures such as lists and arrays.
     !> This is an abstract type, so a derived type must be defined for any
