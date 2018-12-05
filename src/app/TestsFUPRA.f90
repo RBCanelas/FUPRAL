@@ -30,7 +30,7 @@
     type(shape) :: square
     type(circle) :: round
     integer :: test_spots
-    class(*), pointer :: something
+    class(*), pointer :: something, somethingfirst, somethinglast
 
     real(8) :: start1, finish1, start2, finish2, start3, finish3
     integer :: size1, size2, size3
@@ -54,7 +54,7 @@
     do i=1, test_spots
         square%id = i
         call shp_array%put(i, square)
-        call shp_list%add(square,i)
+        !call shp_list%add(square,i)
     enddo
 
     print*, "Printing our amazing container array!"
@@ -66,7 +66,7 @@
 
     print*, "Replacing a value on our amazing container array with something different!"
     call shp_array%put(1, round)
-    call shp_list%add(round,10)
+    !call shp_list%add(round,10)
     print*, "Printing our amazing container array!"
     call shp_array%printArray()
 
@@ -105,13 +105,26 @@
 
     print*, '----------------------Linked List-----------------------'
 
-    print*, 'list is ', shp_list%getSize(), ' links long'
+    square%id = 16
+    square%filled = .true.
 
+    test_spots = 6
+    !call shp_array%init(test_spots)
+    do i=1, test_spots
+        square%id = i
+        !call shp_array%put(i, square)
+        call shp_list%add(square,i)
+    enddo
+
+    round%id = 517
+    round%radius = 1.78
+    round%filled = .false.
+    call shp_list%add(round,10)
+
+    print*, 'list is ', shp_list%getSize(), ' links long'
     call shp_list%print()
 
     something => shp_list%getValue(5)
-    !something => testlist%getValue(4)
-
     print*, 'getting a value from the list'
     select type(something)
     class is (shape)
@@ -122,32 +135,68 @@
         stop 'Unexepected type of content: not a shape'
     end select
 
+    somethingfirst => shp_list%getValue(1)
+    print*, 'getting first value from the list'
+    select type(somethingfirst)
+    class is (shape)
+        call somethingfirst%print()
+        class default
+        stop 'Unexepected type of content: not a shape'
+    end select
+
+    somethinglast => shp_list%getValue(shp_list%getSize())
+    print*, 'getting last value from the list'
+    select type(somethinglast)
+    class is (shape)
+        call somethinglast%print()
+        class default
+        stop 'Unexepected type of content: not a shape'
+    end select
+
     print*, 'changing a value from the list'
     call shp_list%print()
 
-    i=1
-    print*, 'removing links from the list'
-    call shp_list%reset()
+    ! i=1
+    ! print*, 'removing links from the list'
+    ! call shp_list%reset()
     
-    do while (shp_list%moreValues())        
-        !print*, 'current value'
-        !call shp_list%printCurrent() 
-        if(i>4) then
-            call shp_list%removeCurrent()
-        else
-            call shp_list%next()
-        end if        
-        i = i + 1
-    end do
+    ! do while (shp_list%moreValues())        
+    !     !print*, 'current value'
+    !     !call shp_list%printCurrent() 
+    !     if(i>4) then
+    !         call shp_list%removeCurrent()
+    !     else
+    !         call shp_list%next()
+    !     end if        
+    !     i = i + 1
+    ! end do
     
-    print*, 'current list'
-    call shp_list%print()
+    ! print*, 'current list'
+    ! call shp_list%print()
     
     print*, 'removing links from the list by position'
     call shp_list%remove(shp_list%getSize()-2)
     
     print*, 'current list'
+    print*, 'list is ', shp_list%getSize(), ' links long'
     call shp_list%print()
+
+    print*, 'adding elements again to the list'
+    round%id = 999
+    call shp_list%add(round,20)
+
+    print*, 'current list'
+    print*, 'list is ', shp_list%getSize(), ' links long'
+    call shp_list%print()
+
+    somethinglast => shp_list%getValue(shp_list%getSize())
+    print*, 'getting last value from the list'
+    select type(somethinglast)
+    class is (shape)
+        call somethinglast%print()
+        class default
+        stop 'Unexepected type of content: not a shape'
+    end select
 
     print*, '-------------------Performance tests--------------------'
     test_spots = 10000000
