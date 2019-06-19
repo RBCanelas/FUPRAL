@@ -23,13 +23,13 @@
 
     implicit none
 
-    integer i
+    integer i, j
     type(shapeArray)  :: shp_array, testarray, testarray2
-    type(shapeList) :: shp_list, testlist, testlist2
+    type(shapeList) :: shp_list, testlist, testlist2, testlist3
     integer :: values(10)
     type(shape) :: square
     type(circle) :: round
-    integer :: test_spots
+    integer :: test_spots, cicles
     class(*), pointer :: something, somethingfirst, somethinglast
 
     real(8) :: start1, finish1, start2, finish2, start3, finish3
@@ -236,12 +236,38 @@
     print*, '-------------------memory leak tests--------------------'
     print*, 'use your system manager and bask in the magic :)'
     
-    call testlist2%reset()
-    do while (testlist2%moreValues())
-        call testlist2%removeCurrent()
-    end do
+    print*,'deallocating normal array'
+    deallocate(normIntArr)
+    print*,'Any key to continue'
+    read(*,*)
     
-    !read(*,*)
+    print*,'deallocating poly array'
+    call testarray2%init(1)
+    print*,'Any key to continue'
+    read(*,*)
+    
+    print*,'deallocating poly list'
+    call testlist2%cleanList()
+    print*,'Any key to continue'
+    read(*,*)
+    
+    print*, '-------------------INTENSE memory leak tests--------------------'
+    
+    test_spots = 10000000
+    cicles = 100
+    do j=1, cicles
+        print*, 'initial size = ', testlist3%getSize()
+        do i=1, test_spots
+            call testlist3%add(10,i)
+        enddo
+        print*,'alloc size = ', testlist3%getSize()
+        call testlist3%cleanList()
+        print*, 'dealloc size = ', testlist3%getSize()
+        print*, 'alloc/dealloc cicle ', j
+    end do
+    print*,'Poly list allocated and deallocated ', cicles, ' times. Check memory useage'
+    print*,'Any key to continue'
+    read(*,*)
 
 
     end program TestsFUPRA

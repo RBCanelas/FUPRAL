@@ -72,7 +72,10 @@
     !---------------------------------------------------------------------------
     subroutine deleteContent(this)
     class(container), intent(inout) :: this    
-    deallocate(this%value)
+    if (associated(this%value)) deallocate(this%value)
+    nullify(this%value)
+    !deallocate(this)
+    !this => null()
     end subroutine deleteContent
 
     !---------------------------------------------------------------------------
